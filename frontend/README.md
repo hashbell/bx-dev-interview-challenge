@@ -71,8 +71,19 @@ A modern React file upload and management application built with TypeScript, Mat
 - Manual theme toggle with persistent storage
 - Smooth transitions between themes
 
+## Environment Variables
+
+The application supports environment variables for configuration. Create a `.env` file in the frontend directory to override default settings:
+
+```env
+# API Configuration
+VITE_APP_API_BASE_URL=http://localhost:3000/api
+```
+
+**Note**: All environment variables must be prefixed with `VITE_` to be accessible in the browser.
+
 ## Backend Integration
-The frontend connects to a NestJS backend running on `http://localhost:3001`. Ensure the backend is running before using the application.
+The frontend connects to a NestJS backend running on `http://localhost:3000`. Ensure the backend is running before using the application.
 
 ## Browser Support
 - Chrome (recommended)

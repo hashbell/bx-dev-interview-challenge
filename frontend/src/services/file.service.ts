@@ -1,4 +1,5 @@
 import { FileItem } from '../types';
+import { API_BASE_URL } from '../constants';
 
 export interface UploadProgress {
   fileId: string;
@@ -26,7 +27,7 @@ export interface PresignedUrlResponse {
 }
 
 export class FileService {
-  private baseUrl = 'http://localhost:3001/api'; // Backend API URL
+  private baseUrl = API_BASE_URL; // Backend API URL
 
   private getAuthHeaders(): { Authorization?: string } {
     const token = localStorage.getItem('authToken');

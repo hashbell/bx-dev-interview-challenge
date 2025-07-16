@@ -1,16 +1,3 @@
-/**
- * Application constants
- * 
- * CONFIGURATION GUIDE:
- * To change the file size limit, modify the MAX_FILE_SIZE_BYTES constant below.
- * Examples:
- * - 10MB: 10 * 1024 * 1024
- * - 25MB: 25 * 1024 * 1024
- * - 100MB: 100 * 1024 * 1024
- * 
- * Note: Make sure to also update the backend MAX_FILE_SIZE constant to match.
- */
-
 // File upload constants
 export const MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024; // 5MB in bytes
 export const MAX_FILE_SIZE_MB = MAX_FILE_SIZE_BYTES / (1024 * 1024); // 5MB for display
@@ -41,7 +28,7 @@ export const ALLOWED_FILE_EXTENSIONS = [
 ];
 
 // API configuration
-export const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:3001/api';
+export const API_BASE_URL = import.meta.env?.VITE_API_BASE_URL || 'http://localhost:3000/api';
 
 // Upload configuration
 export const UPLOAD_TIMEOUT_MS = 30000; // 30 seconds

@@ -1,4 +1,5 @@
 import { LoginRequest, RegisterRequest, AuthResponse } from '../types';
+import { API_BASE_URL } from '../constants';
 
 export interface User {
   id: number;
@@ -13,7 +14,7 @@ export interface RegisterResponse {
 }
 
 export class AuthService {
-  private baseUrl = 'http://localhost:3001/api'; // Backend API URL
+  private baseUrl = API_BASE_URL; // Backend API URL
 
   async login(credentials: LoginRequest): Promise<AuthResponse> {
     try {
