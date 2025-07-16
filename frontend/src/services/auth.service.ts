@@ -10,6 +10,7 @@ export interface User {
 }
 
 export interface RegisterResponse {
+  access_token: string;
   user: User;
 }
 
@@ -57,8 +58,9 @@ export class AuthService {
       }
 
       const data = await response.json();
-      // Registration doesn't return an access token, so we don't set it
-      // User will need to login after registration
+      // Store the access token and user data for immediate authentication
+      localStorage.setItem('authToken', data.access_token);
+      localStorage.setItem('user', JSON.stringify(data.user));
       return data;
     } catch (error) {
       console.error('Registration error:', error);

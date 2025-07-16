@@ -13,10 +13,6 @@ export const AuthLayout: React.FC = () => {
     setIsLogin(!isLogin);
   };
 
-  const handleRegister = () => {
-    setIsLogin(true);
-  };
-
   return (
     <Box sx={{ position: 'relative', minHeight: '100vh', overflow: 'hidden' }}>
       {/* Organic shapes for background decoration */}
@@ -48,7 +44,6 @@ export const AuthLayout: React.FC = () => {
           />
         ) : (
           <RegisterForm 
-            onRegister={handleRegister} 
             isDarkMode={isDarkMode} 
             onToggleForm={handleToggleForm}
           />

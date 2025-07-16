@@ -19,12 +19,11 @@ import {
 } from '../../styles/auth.styles';
 
 interface RegisterFormProps {
-  onRegister: () => void;
   isDarkMode: boolean;
   onToggleForm: () => void;
 }
 
-export const RegisterForm: React.FC<RegisterFormProps> = ({ onRegister, isDarkMode, onToggleForm }) => {
+export const RegisterForm: React.FC<RegisterFormProps> = ({ isDarkMode, onToggleForm }) => {
   const { register } = useAuth();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -41,8 +40,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onRegister, isDarkMo
 
     try {
       await register({ name, email, password });
-      setSuccess('Registration successful! Please sign in.');
-      setTimeout(() => onRegister(), 1000);
+      setSuccess('Registration successful! You are now signed in.');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Registration failed');
     } finally {

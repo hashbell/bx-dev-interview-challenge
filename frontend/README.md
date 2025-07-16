@@ -29,6 +29,17 @@ A modern React file upload and management application built with TypeScript, Mat
 - Yarn package manager
 - Backend server running (see backend solution.md)
 
+## Environment Variables
+
+The application supports environment variables for configuration. Create a `.env` file in the frontend directory to override default settings:
+
+```env
+# API Configuration
+VITE_API_BASE_URL=http://localhost:3000/api
+```
+
+**Note**: All environment variables must be prefixed with `VITE_` to be accessible in the browser.
+
 ### Installation
 
 1. **Install dependencies:**
@@ -38,11 +49,11 @@ A modern React file upload and management application built with TypeScript, Mat
 
 2. **Start the development server:**
    ```bash
-   yarn dev
+   yarn start:dev
    ```
 
 3. **Open your browser:**
-   Navigate to `http://localhost:3004`
+   Navigate to `http://localhost:3001`
 
 ### Available Scripts
 
@@ -53,8 +64,6 @@ A modern React file upload and management application built with TypeScript, Mat
 - `yarn test` - Run tests
 
 ## Project Structure
-
-```
 
 ## Key Features Explained
 
@@ -71,17 +80,6 @@ A modern React file upload and management application built with TypeScript, Mat
 - Manual theme toggle with persistent storage
 - Smooth transitions between themes
 
-## Environment Variables
-
-The application supports environment variables for configuration. Create a `.env` file in the frontend directory to override default settings:
-
-```env
-# API Configuration
-VITE_APP_API_BASE_URL=http://localhost:3000/api
-```
-
-**Note**: All environment variables must be prefixed with `VITE_` to be accessible in the browser.
-
 ## Backend Integration
 The frontend connects to a NestJS backend running on `http://localhost:3000`. Ensure the backend is running before using the application.
 
@@ -95,8 +93,8 @@ The frontend connects to a NestJS backend running on `http://localhost:3000`. En
 
 **Port already in use:**
 ```bash
-# Kill process on port 3004
-lsof -ti:3004 | xargs kill -9
+# Kill process on port 3001
+lsof -ti:3001 | xargs kill -9
 ```
 
 **Yarn issues:**
