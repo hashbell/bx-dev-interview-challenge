@@ -3,6 +3,7 @@ import {
   ClassTransformOptions,
   instanceToPlain,
   plainToClass,
+  plainToInstance,
 } from 'class-transformer';
 
 export class Mapper {
@@ -65,5 +66,22 @@ export class Mapper {
     });
 
     return mappedArrayData;
+  }
+
+  static mapToInstance<DestinationClass, SourceData>(
+    className: ClassConstructor<DestinationClass>,
+    source: SourceData,
+    options?: ClassTransformOptions,
+  ): DestinationClass {
+    const mappedData = plainToInstance<DestinationClass, SourceData>(
+      className,
+      source,
+      {
+        ...this._DEFAULT_OPTIONS,
+        ...options,
+      },
+    );
+
+    return mappedData;
   }
 }
