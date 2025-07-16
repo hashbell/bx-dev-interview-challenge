@@ -123,10 +123,12 @@ describe('AuthService', () => {
     it('should successfully register a new user', async () => {
       // Arrange
       const hashedPassword = 'hashedPassword123';
+      const mockToken = 'mock.jwt.token';
       const newUser = { ...mockUser, id: 2, email, name, password: hashedPassword };
       userRepository.findByEmail.mockResolvedValue(null);
       (bcrypt.hash as jest.Mock).mockResolvedValue(hashedPassword);
       userRepository.create.mockResolvedValue(newUser);
+      jwtService.sign.mockReturnValue(mockToken);
       mockMapper.mapToInstance.mockReturnValue(mockUserResponse);
 
       // Act
@@ -134,8 +136,10 @@ describe('AuthService', () => {
 
       // Assert
       expect(result).toEqual({
+        access_token: mockToken,
         user: mockUserResponse,
       });
+      expect(jwtService.sign).toHaveBeenCalledWith({ sub: newUser.id, email: newUser.email });
     });
 
     it('should throw ConflictException when user already exists', async () => {

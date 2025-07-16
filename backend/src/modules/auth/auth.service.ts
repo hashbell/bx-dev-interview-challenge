@@ -51,9 +51,13 @@ export class AuthService implements IAuthService {
       name,
     });
 
+    const payload = { sub: user.id, email: user.email };
+    const access_token = this.jwtService.sign(payload);
+
     this.logger.log(`Registration successful for user: ${user.id}`);
 
     return {
+      access_token,
       user: Mapper.mapToInstance(UserResponseDto, user),
     };
   }

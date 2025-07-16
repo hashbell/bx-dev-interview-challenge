@@ -65,6 +65,14 @@ export class LoginResponseDto {
 
 export class RegisterResponseDto {
   @ApiProperty({
+    description: 'JWT access token for authentication',
+    example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...',
+  })
+  @Expose()
+  @IsString()
+  access_token: string;
+
+  @ApiProperty({
     description: 'User information',
     type: UserResponseDto,
   })

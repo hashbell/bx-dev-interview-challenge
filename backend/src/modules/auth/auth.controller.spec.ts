@@ -30,6 +30,7 @@ describe('AuthController (e2e)', () => {
   };
 
   const mockRegisterResponse: RegisterResponseDto = {
+    access_token: 'mock-jwt-token',
     user: mockUser,
   };
 
@@ -163,6 +164,7 @@ describe('AuthController (e2e)', () => {
         .expect(201);
 
       expect(response.body).toEqual({
+        access_token: 'mock-jwt-token',
         user: {
           id: 1,
           email: 'test@example.com',

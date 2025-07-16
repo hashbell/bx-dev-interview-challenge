@@ -163,5 +163,53 @@ export class PresignedUrlResponseDto {
   @IsOptional()
   @IsString()
   filename?: string;
+}
+
+export class FileUploadDto {
+  @ApiProperty({
+    type: 'string',
+    format: 'binary',
+    description: 'File to upload (max 5MB)',
+    example: 'document.pdf',
+  })
+  file: Express.Multer.File;
+}
+
+export class PresignedUploadCompleteDto {
+  @ApiProperty({
+    description: 'File key (UUID) from presigned upload',
+    example: '550e8400-e29b-41d4-a716-446655440000',
+  })
+  @IsString()
+  @IsNotEmpty()
+  key: string;
+
+  @ApiProperty({
+    description: 'Original filename',
+    example: 'document.pdf',
+  })
+  @IsString()
+  @IsNotEmpty()
+  filename: string;
+
+  @ApiProperty({
+    description: 'File size in bytes',
+    example: 1024000,
+    minimum: 1,
+    maximum: MAX_FILE_SIZE,
+  })
+  @IsNumber()
+  @Min(1)
+  @Max(MAX_FILE_SIZE)
+  size: number;
+
+  @ApiProperty({
+    description: 'File MIME type',
+    example: 'application/pdf',
+  })
+  @IsString()
+  @IsNotEmpty()
+  @IsAllowedMimeType()
+  mimetype: string;
 } 
  

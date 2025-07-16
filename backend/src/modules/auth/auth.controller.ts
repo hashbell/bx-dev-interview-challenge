@@ -78,7 +78,7 @@ export class AuthController {
   @HttpCode(HttpStatus.CREATED)
   @ApiOperation({
     summary: 'User Registration',
-    description: 'Register a new user account',
+    description: 'Register a new user account and receive JWT token for immediate authentication',
   })
   @ApiBody({
     type: RegisterDto,

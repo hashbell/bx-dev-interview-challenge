@@ -29,7 +29,7 @@ export const swaggerConfig = new DocumentBuilder()
     },
     'JWT-auth',
   )
-  .addServer('http://localhost:3001', 'Development server')
+  .addServer('http://localhost:3000', 'Development server')
   .addServer('https://api.bonusx.com', 'Production server')
   .build();
 

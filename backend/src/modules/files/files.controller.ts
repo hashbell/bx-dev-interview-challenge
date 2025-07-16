@@ -23,13 +23,14 @@ import {
   ApiParam,
   ApiUnauthorizedResponse,
   ApiQuery,
+  ApiBody,
 } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Response } from 'express';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 import { FILES_SERVICE, IFilesService } from './files.service.interface';
 import { AuthenticatedRequest } from '../../shared/interfaces/request.interface';
-import { FileResponseDto, FileListResponseDto, PresignedUrlResponseDto } from './dto/file.dto';
+import { FileResponseDto, FileListResponseDto, PresignedUrlResponseDto, FileUploadDto, PresignedUploadCompleteDto } from './dto/file.dto';
 import { FileValidationPipe } from '../../common/pipes/file-validation.pipe';
 import { Mapper } from '@/common/utils/mapper/mapper';
 import { PresignedUrlQueryDto } from './dto/file.dto';
@@ -48,9 +49,13 @@ export class FilesController {
   @HttpCode(HttpStatus.CREATED)
   @ApiOperation({
     summary: 'Upload File',
-    description: 'Upload a file to the system. Files are stored with UUID keys for security.',
+    description: 'Upload a file to the system. Files are stored with UUID keys for security. Maximum file size: 5MB. Supported formats: Images (JPEG, PNG, GIF, WebP), Documents (PDF, DOC, DOCX, XLS, XLSX), Text files, and more.',
   })
   @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    type: FileUploadDto,
+    description: 'File upload form data',
+  })
   @ApiResponse({
     status: 201,
     description: 'File uploaded successfully',
@@ -65,6 +70,18 @@ export class FilesController {
         statusCode: { type: 'number', example: 400 },
         message: { type: 'string', example: 'File type application/octet-stream is not allowed' },
         error: { type: 'string', example: 'Bad Request' },
+      },
+    },
+  })
+  @ApiResponse({
+    status: 413,
+    description: 'File too large',
+    schema: {
+      type: 'object',
+      properties: {
+        statusCode: { type: 'number', example: 413 },
+        message: { type: 'string', example: 'File size exceeds maximum allowed size' },
+        error: { type: 'string', example: 'Payload Too Large' },
       },
     },
   })
@@ -202,6 +219,10 @@ export class FilesController {
     summary: 'Complete Presigned Upload',
     description: 'Create a file record after successful presigned upload to S3.',
   })
+  @ApiBody({
+    type: PresignedUploadCompleteDto,
+    description: 'File metadata for presigned upload completion',
+  })
   @ApiResponse({
     status: 201,
     description: 'File record created successfully',
@@ -216,7 +237,7 @@ export class FilesController {
   })
   async completePresignedUpload(
     @Request() req: AuthenticatedRequest,
-    @Body() body: { key: string; filename: string; size: number; mimetype: string }
+    @Body() body: PresignedUploadCompleteDto
   ): Promise<FileResponseDto> {
     const result = await this.fileService.createFileRecord(body.key, body.filename, body.size, body.mimetype, req.user!.id);
     return Mapper.mapToInstance(FileResponseDto, result);
