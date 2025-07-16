@@ -5,7 +5,6 @@ import {
   Typography,
   List,
   ListItem,
-  ListItemText,
   ListItemSecondaryAction,
   IconButton,
   Chip,
@@ -235,30 +234,26 @@ export const FileList: React.FC<FileListProps> = ({ isDarkMode, refreshTrigger =
         <List sx={listStyles}>
           {files.map((file) => (
             <ListItem key={file.id} sx={listItemStyles(isDarkMode)}>
-              <ListItemText
-                primary={
-                  <Box sx={fileInfoContainerStyles}>
-                    <Typography variant="h6">
-                      {getFileIcon(file.mimetype)}
-                    </Typography>
-                    <Typography variant="body1" sx={fileNameStyles(isDarkMode)}>
-                      {file.filename}
-                    </Typography>
-                  </Box>
-                }
-                secondary={
-                  <Box sx={fileDetailsContainerStyles}>
-                    <Chip 
-                      label={fileService.formatFileSize(file.size)}
-                      size="small"
-                      sx={fileSizeChipStyles(isDarkMode)}
-                    />
-                    <Typography variant="caption" sx={fileDateStyles(isDarkMode)}>
-                      {formatDate(file.uploadedAt)}
-                    </Typography>
-                  </Box>
-                }
-              />
+              <Box sx={{ flex: 1 }}>
+                <Box sx={fileInfoContainerStyles}>
+                  <Typography variant="h6">
+                    {getFileIcon(file.mimetype)}
+                  </Typography>
+                  <Typography variant="body1" sx={fileNameStyles(isDarkMode)}>
+                    {file.filename}
+                  </Typography>
+                </Box>
+                <Box sx={fileDetailsContainerStyles}>
+                  <Chip 
+                    label={fileService.formatFileSize(file.size)}
+                    size="small"
+                    sx={fileSizeChipStyles(isDarkMode)}
+                  />
+                  <Typography variant="caption" sx={fileDateStyles(isDarkMode)}>
+                    {formatDate(file.uploadedAt)}
+                  </Typography>
+                </Box>
+              </Box>
               <ListItemSecondaryAction>
                 <Box sx={downloadButtonContainerStyles}>
                   <IconButton
