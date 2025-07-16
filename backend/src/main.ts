@@ -1,22 +1,43 @@
-import { ConsoleLogger, ValidationPipe } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
+import { ConsoleLogger, ValidationPipe } from '@nestjs/common';
+import { SwaggerModule } from '@nestjs/swagger';
+import { AppModule } from './modules/app/app.module';
+import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
+import { GlobalExceptionFilter } from './common/filters/global-exception.filter';
+import { ConfigService } from '@nestjs/config';
+import { swaggerConfig, swaggerOptions } from './configs/swagger.config';
 
 async function bootstrap() {
   const logger = new ConsoleLogger({
     prefix: 'Bonusx',
   });
-  const app = await NestFactory.create(AppModule, {
-    abortOnError: true,
-    logger,
+  const app = await NestFactory.create(AppModule);
+
+  // Global prefix
+  app.setGlobalPrefix('api');
+
+  // Global pipes
+  app.useGlobalPipes(new ValidationPipe({
+    transform: true,
+    whitelist: true,
+    forbidNonWhitelisted: true,
+  }));
+
+  // Global interceptors
+  app.useGlobalInterceptors(new LoggingInterceptor());
+
+  // Global filters
+  app.useGlobalFilters(new GlobalExceptionFilter());
+
+  // CORS
+  app.enableCors({
+    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+    credentials: true,
   });
 
-  app.setGlobalPrefix('api');
-  app.useGlobalPipes(new ValidationPipe());
-  app.enableCors({
-    origin: '*',
-  });
+  // Swagger Documentation
+  const document = SwaggerModule.createDocument(app, swaggerConfig);
+  SwaggerModule.setup('api/docs', app, document, swaggerOptions);
 
   const configService = app.get(ConfigService);
   const port = configService.get<number>('port') as number;
@@ -25,7 +46,9 @@ async function bootstrap() {
     logger.log(
       `🚀 Bonusx File Uploader is running on: http://localhost:${port}`,
     );
+    logger.log(
+      `📚 API Documentation available at: http://localhost:${port}/api/docs`,
+    );
   });
 }
-
-void bootstrap();
+bootstrap();
