@@ -25,9 +25,17 @@
     "inlineSources": true,
     "sourceRoot": "/",
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
+      "@/*": ["src/*"],
+      "@configs/*": ["src/configs/*"],
+      "@common/*": ["src/common/*"],
+      "@constants/*": ["src/constants/*"],
+      "@database/*": ["src/database/*"],
+      "@auth/*": ["src/modules/auth/*"],
+      "@app/*": ["src/modules/app/*"],
+      "@files/*": ["src/modules/files/*"],
+      "@interfaces/*": ["src/interfaces/*"],
+      "@shared/*": ["src/shared/*"],
+      "@seeds/*": ["src/seeds/*"]
     }
   },
   "files": [
