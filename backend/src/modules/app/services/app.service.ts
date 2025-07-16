@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { IMessageEntity, MessageEntity } from '../../entities/message.entity';
+import { IMessageEntity, MessageEntity } from '../dto/message.entity';
 import { IAppService } from './app.service.interface';
 
 @Injectable()

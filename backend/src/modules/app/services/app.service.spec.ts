@@ -1,5 +1,5 @@
 import { TestBed } from '@suites/unit';
-import { MessageEntity } from '../../entities/message.entity';
+import { MessageEntity } from '../dto/message.entity';
 import { AppService } from './app.service';
 import { IAppService } from './app.service.interface';
 

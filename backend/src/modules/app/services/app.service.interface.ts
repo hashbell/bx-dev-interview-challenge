@@ -1,4 +1,4 @@
-import { IMessageEntity } from '@/entities/message.entity';
+import { IMessageEntity } from '../dto/message.entity';
 
 export interface IAppService {
   getHello(): IMessageEntity;

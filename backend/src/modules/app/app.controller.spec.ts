@@ -1,30 +1,39 @@
-import { Mocked, TestBed } from '@suites/unit';
-import { MessageDto } from '../dtos/message.dto';
-import { MessageEntity } from '../entities/message.entity';
-import { AppService } from '../services/app/app.service';
-import { IAppService } from '../services/app/app.service.interface';
-import { Mapper } from '../utils/mapper/mapper';
+ import { Test, TestingModule } from '@nestjs/testing';
 import { AppController } from './app.controller';
+import { AppService } from './services/app.service';
+import { MessageDto } from './dto/message.dto';
+import { IAppService } from './services/app.service.interface';
+import { Mapper } from '@/common/utils/mapper/mapper';
+import { MessageEntity } from './dto/message.entity';
 
-jest.mock('../utils/mapper/mapper');
+jest.mock('@/common/utils/mapper/mapper');
 
 describe('AppController', () => {
   let appController: AppController;
-  let appService: Mocked<IAppService>;
+  let appService: jest.Mocked<AppService>;
 
-  beforeAll(async () => {
-    const { unit, unitRef } = await TestBed.solitary(AppController).compile();
+  const mockAppService = {
+    getHello: jest.fn(),
+  } as unknown as jest.Mocked<IAppService>;
 
-    appController = unit;
-    appService = unitRef.get(AppService);
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      controllers: [AppController],
+      providers: [
+        { provide: AppService, useValue: mockAppService },
+      ],
+    }).compile();
+
+    appController = module.get<AppController>(AppController);
+    appService = module.get(AppService);
 
     jest.spyOn(Mapper, 'mapData').mockImplementation();
+    jest.clearAllMocks();
   });
 
   describe('getHello', () => {
     it('should call the service', () => {
       appController.getHello();
-
       expect(appService.getHello).toHaveBeenCalledWith();
     });
 
