@@ -1,46 +1,97 @@
-# Bonusx developer interview challenge
+# Frontend Solution
 
-## 📘 Challenge
+## Overview
+A modern React file upload and management application built with TypeScript, Material-UI, and Tailwind CSS. Features include drag-and-drop file uploads, presigned URL support, dark/light theme switching, and responsive design.
 
-### Request
+## Features
+- **File Upload**: Drag-and-drop or click-to-browse file uploads
+- **Dual Upload Modes**: Direct upload and presigned URL upload for enhanced performance
+- **File Management**: View, download, and manage uploaded files
+- **Dual Download Modes**: Direct download and presigned URL download
+- **Authentication**: User registration and login with JWT
+- **Theme Support**: Dark and light mode with smooth transitions
+- **Responsive Design**: Works on desktop, tablet, and mobile devices
+- **Real-time Progress**: Upload progress indicators and status messages
+- **Error Handling**: Comprehensive error messages from backend validation
 
-**As a** Fullstack Developer Candidate  
-**I want** to build a simple application where users can upload and download files  
-**So that** I can demonstrate my ability to integrate a frontend form with a backend API and an AWS S3 storage system
+## Tech Stack
+- **React 18** with TypeScript
+- **Material-UI (MUI)** for UI components
+- **Tailwind CSS** for styling
+- **React Router** for navigation
+- **Context API** for state management
+- **Fetch API** for HTTP requests
 
----
+## Getting Started
 
-### ✅ Acceptance Criteria
+### Prerequisites
+- Node.js (v16 or higher)
+- Yarn package manager
+- Backend server running (see backend solution.md)
 
-- **Given** a user opens the frontend  
-  **When** they select a file and submit the form  
-  **Then** the file is uploaded to the backend and stored in an S3 bucket  
+### Installation
 
-- **Given** a file was uploaded successfully  
-  **When** the user receives a confirmation  
-  **Then** they should be able to download it back  
+1. **Install dependencies:**
+   ```bash
+   yarn install
+   ```
 
----
+2. **Start the development server:**
+   ```bash
+   yarn dev
+   ```
 
-### 💡 Nice to Have
+3. **Open your browser:**
+   Navigate to `http://localhost:3004`
 
-- **Authentication**: a simple login system (e.g., with email + password or JWT)
-- **File listing**: a list of uploaded files with metadata and download links
-- **Presigned URLs**: for secure file uploads/downloads directly to/from S3
-- **File validation**: limit allowed file types or sizes
+### Available Scripts
 
-## 🚀 How to start
+- `yarn dev` - Start development server
+- `yarn build` - Build for production
+- `yarn preview` - Preview production build
+- `yarn lint` - Run ESLint
+- `yarn test` - Run tests
 
-To start the project, you can use the following commands:
+## Project Structure
 
 ```
-yarn && yarn prepare
+
+## Key Features Explained
+
+### Upload Modes
+- **Direct Upload**: Files uploaded through the backend server
+- **Presigned URL**: Files uploaded directly to cloud storage for better performance
+
+### Download Modes
+- **Direct Download**: Files downloaded through the backend server
+- **Presigned URL**: Files downloaded directly from cloud storage
+
+### Theme System
+- Automatic theme detection based on system preferences
+- Manual theme toggle with persistent storage
+- Smooth transitions between themes
+
+## Backend Integration
+The frontend connects to a NestJS backend running on `http://localhost:3001`. Ensure the backend is running before using the application.
+
+## Browser Support
+- Chrome (recommended)
+- Firefox
+- Safari
+- Edge
+
+## Troubleshooting
+
+**Port already in use:**
+```bash
+# Kill process on port 3004
+lsof -ti:3004 | xargs kill -9
 ```
 
-## Frontend
-
-[how to start](./frontend/README.md)
-
-## Backend
-
-[how to start](./backend/README.md)
+**Yarn issues:**
+```bash
+# Clear yarn cache
+yarn cache clean
+# Reinstall dependencies
+rm -rf node_modules && yarn install
+``` 
