@@ -26,8 +26,6 @@ services:
       - POSTGRES_PASSWORD=password
     expose:
       - '5432'
-    ports:
-      - '5434:5432'
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql
@@ -39,8 +37,6 @@ services:
     image: scireum/s3-ninja:latest
     expose:
       - '9000'
-    ports:
-      - '9001:9000'
     volumes:
       - ./docker/storage_data:/home/sirius/data
     networks:

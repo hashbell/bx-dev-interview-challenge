@@ -100,10 +100,8 @@ describe('AuthController (e2e)', () => {
     });
 
     it('should return 401 when login fails', async () => {
-      // Arrange
       authService.login.mockRejectedValue(new UnauthorizedException('Invalid credentials'));
 
-      // Act & Assert
       const response = await request(app.getHttpServer())
         .post('/auth/login')
         .send(loginDto)
@@ -114,7 +112,6 @@ describe('AuthController (e2e)', () => {
     });
 
     it('should return 400 when email is missing', async () => {
-      // Act & Assert
       await request(app.getHttpServer())
         .post('/auth/login')
         .send({ password: 'password123' })
@@ -122,7 +119,6 @@ describe('AuthController (e2e)', () => {
     });
 
     it('should return 400 when password is missing', async () => {
-      // Act & Assert
       await request(app.getHttpServer())
         .post('/auth/login')
         .send({ email: 'test@example.com' })
@@ -130,7 +126,6 @@ describe('AuthController (e2e)', () => {
     });
 
     it('should return 400 when email is invalid', async () => {
-      // Act & Assert
       await request(app.getHttpServer())
         .post('/auth/login')
         .send({ email: 'invalid-email', password: 'password123' })
@@ -138,7 +133,6 @@ describe('AuthController (e2e)', () => {
     });
 
     it('should return 400 when password is too short', async () => {
-      // Act & Assert
       await request(app.getHttpServer())
         .post('/auth/login')
         .send({ email: 'test@example.com', password: 'short' })
@@ -154,10 +148,8 @@ describe('AuthController (e2e)', () => {
     };
 
     it('should return 201 with user data', async () => {
-      // Arrange
       authService.register.mockResolvedValue(mockRegisterResponse);
 
-      // Act & Assert
       const response = await request(app.getHttpServer())
         .post('/auth/register')
         .send(registerDto)
@@ -181,10 +173,8 @@ describe('AuthController (e2e)', () => {
     });
 
     it('should return 409 when user already exists', async () => {
-      // Arrange
       authService.register.mockRejectedValue(new ConflictException('User already exists'));
 
-      // Act & Assert
       const response = await request(app.getHttpServer())
         .post('/auth/register')
         .send(registerDto)
@@ -199,7 +189,6 @@ describe('AuthController (e2e)', () => {
     });
 
     it('should return 400 when email is missing', async () => {
-      // Act & Assert
       await request(app.getHttpServer())
         .post('/auth/register')
         .send({ password: 'securepassword123', name: 'New User' })

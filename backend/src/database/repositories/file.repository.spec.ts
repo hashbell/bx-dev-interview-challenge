@@ -54,13 +54,10 @@ describe('FileRepository', () => {
 
   describe('create', () => {
     it('should create and return a file entity', async () => {
-      // Arrange
       fileRepository.save.mockResolvedValue(mockFile);
 
-      // Act
       const result = await repository.create(mockCreateFileDto);
 
-      // Assert
       expect(fileRepository.save).toHaveBeenCalledWith(
         expect.objectContaining({
           key: mockCreateFileDto.key,
@@ -76,14 +73,11 @@ describe('FileRepository', () => {
 
   describe('findAll', () => {
     it('should return all files with user relations', async () => {
-      // Arrange
       const mockFiles = [mockFile];
       fileRepository.find.mockResolvedValue(mockFiles);
 
-      // Act
       const result = await repository.findAll();
 
-      // Assert
       expect(fileRepository.find).toHaveBeenCalledWith({ relations: ['user'] });
       expect(result).toEqual(mockFiles);
     });
@@ -93,14 +87,11 @@ describe('FileRepository', () => {
     const userId = 1;
 
     it('should return files for specific user', async () => {
-      // Arrange
       const mockFiles = [mockFile];
       fileRepository.find.mockResolvedValue(mockFiles);
 
-      // Act
       const result = await repository.findByUser(userId);
 
-      // Assert
       expect(fileRepository.find).toHaveBeenCalledWith({
         where: { uploadedBy: userId },
         relations: ['user'],
@@ -114,13 +105,10 @@ describe('FileRepository', () => {
     const key = '550e8400-e29b-41d4-a716-446655440000';
 
     it('should return file when found', async () => {
-      // Arrange
       fileRepository.findOne.mockResolvedValue(mockFile);
 
-      // Act
       const result = await repository.findByKey(key);
 
-      // Assert
       expect(fileRepository.findOne).toHaveBeenCalledWith({
         where: { key },
         relations: ['user'],
@@ -129,13 +117,10 @@ describe('FileRepository', () => {
     });
 
     it('should return null when file not found', async () => {
-      // Arrange
       fileRepository.findOne.mockResolvedValue(null);
 
-      // Act
       const result = await repository.findByKey(key);
 
-      // Assert
       expect(result).toBeNull();
     });
   });
