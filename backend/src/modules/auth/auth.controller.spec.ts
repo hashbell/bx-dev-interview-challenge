@@ -77,10 +77,8 @@ describe('AuthController (e2e)', () => {
     };
 
     it('should return 200 with access token and user data', async () => {
-      // Arrange
       authService.login.mockResolvedValue(mockLoginResponse);
 
-      // Act & Assert
       const response = await request(app.getHttpServer())
         .post('/auth/login')
         .send(loginDto)
@@ -196,7 +194,6 @@ describe('AuthController (e2e)', () => {
     });
 
     it('should return 400 when password is missing', async () => {
-      // Act & Assert
       await request(app.getHttpServer())
         .post('/auth/register')
         .send({ email: 'newuser@example.com', name: 'New User' })
@@ -204,7 +201,6 @@ describe('AuthController (e2e)', () => {
     });
 
     it('should return 400 when name is missing', async () => {
-      // Act & Assert
       await request(app.getHttpServer())
         .post('/auth/register')
         .send({ email: 'newuser@example.com', password: 'securepassword123' })
@@ -212,7 +208,6 @@ describe('AuthController (e2e)', () => {
     });
 
     it('should return 400 when email is invalid', async () => {
-      // Act & Assert
       await request(app.getHttpServer())
         .post('/auth/register')
         .send({ email: 'invalid-email', password: 'securepassword123', name: 'New User' })
@@ -220,7 +215,6 @@ describe('AuthController (e2e)', () => {
     });
 
     it('should return 400 when password is too weak', async () => {
-      // Act & Assert
       await request(app.getHttpServer())
         .post('/auth/register')
         .send({ email: 'newuser@example.com', password: 'weak', name: 'New User' })
@@ -228,7 +222,6 @@ describe('AuthController (e2e)', () => {
     });
 
     it('should return 400 when name is too short', async () => {
-      // Act & Assert
       await request(app.getHttpServer())
         .post('/auth/register')
         .send({ email: 'newuser@example.com', password: 'securepassword123', name: 'A' })
@@ -238,7 +231,6 @@ describe('AuthController (e2e)', () => {
 
   describe('GET /auth/profile', () => {
     it('should return 404 for non-existent endpoint', async () => {
-      // Act & Assert
       await request(app.getHttpServer())
         .get('/auth/profile')
         .expect(404);
